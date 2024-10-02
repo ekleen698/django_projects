@@ -1,2 +1,4 @@
 */__pycache__/
-*/migrations/__pycache__/
+*/*/__pycache__/
+mysite/__pycache__/
+mysite/mysite/__pycache__/
