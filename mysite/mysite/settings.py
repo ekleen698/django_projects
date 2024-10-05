@@ -3,6 +3,10 @@ Django settings for samples project.
 """
 
 import os
+from environs import Env
+
+env = Env()
+env.read_env()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -100,27 +104,13 @@ DATABASES = {
     }
 }
 """
-"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'ads',
-        'USER': 'eric.kleen',
-        'PASSWORD': 'djpass123',
-        'HOST': 'localhost',
-         'OPTIONS': {
-            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
-        },
-    }
-}
-"""
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'erickleen$ads',
-        'USER': 'erickleen',
-        'PASSWORD': 'djpass123',
-        'HOST': 'erickleen.mysql.pythonanywhere-services.com',
+        'NAME': env.str("DB_NAME"),
+        'USER': env.str("DB_USER"),
+        'PASSWORD': env.str("DB_PASSWORD"),
+        'HOST': env.str("DB_HOST"),
          'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },
