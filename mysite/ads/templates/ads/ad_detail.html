@@ -13,6 +13,7 @@
 {{ ad.text }}
 </p>
 <p>
+Price: ${{ ad.price|floatformat:2 }}
 </p>
 <p>
 <a href="{% url 'ads:ad_all' %}">All ads</a>

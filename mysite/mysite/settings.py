@@ -30,13 +30,13 @@ INSTALLED_APPS = [
     'django.contrib.humanize',
 
     # Extensions - installed with requirements.txt
-    'django_extensions', 
-    'crispy_forms',  
-    'crispy_bootstrap5',  
-    'rest_framework', 
-    'social_django',  
+    'django_extensions',
+    'crispy_forms',
+    'crispy_bootstrap5',
+    'rest_framework',
+    'social_django',
     'taggit',
-    'home.apps.HomeConfig',  
+    'home.apps.HomeConfig',
 
     # Sample Applications - don't copy
     "polls.apps.PollsConfig",
@@ -98,7 +98,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
-}"""
+}
+"""
+"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -115,16 +117,16 @@ DATABASES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'drchuck$ads',
-        'USER': 'drchuck',
-        'PASSWORD': 'phone_8675309',
-        'HOST': 'drchuck.mysql.pythonanywhere-services.com',
+        'NAME': 'erickleen$ads',
+        'USER': 'erickleen',
+        'PASSWORD': 'djpass123',
+        'HOST': 'erickleen.mysql.pythonanywhere-services.com',
          'OPTIONS': {
             'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
         },
     }
 }
-"""
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -175,7 +177,7 @@ REST_FRAMEWORK = {
 
 # Configure the social login
 try:
-    from . import github_settings 
+    from . import github_settings
     SOCIAL_AUTH_GITHUB_KEY = github_settings.SOCIAL_AUTH_GITHUB_KEY
     SOCIAL_AUTH_GITHUB_SECRET = github_settings.SOCIAL_AUTH_GITHUB_SECRET
 except:
