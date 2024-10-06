@@ -43,7 +43,7 @@ class AdCreateView(LoginRequiredMixin, View):
         ad.owner = self.request.user
         ad.save()
 
-        self.success_url = reverse_lazy('ads:ad_detail', args=[pk])
+        self.success_url = reverse_lazy('ads:ad_detail', args=[ad.id])
         return redirect(self.success_url)
 
 class AdUpdateView(LoginRequiredMixin, View):
