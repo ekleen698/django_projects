@@ -24,7 +24,7 @@ class AdDetailView(OwnerDetailView):
 
 class AdCreateView(LoginRequiredMixin, View):
     template_name = 'ads/ad_form.html'
-    success_url = ""
+    success_url = "ads:ad_all"
 
     def get(self, request, pk=None):
         form = CreateForm()
@@ -43,12 +43,12 @@ class AdCreateView(LoginRequiredMixin, View):
         ad.owner = self.request.user
         ad.save()
 
-        self.success_url = reverse_lazy('ads:ad_detail', args=[ad.id])
+        #self.success_url = reverse_lazy('ads:ad_detail', args=[ad.id])
         return redirect(self.success_url)
 
 class AdUpdateView(LoginRequiredMixin, View):
     template_name = 'ads/ad_form.html'
-    success_url = ""
+    success_url = "ads:ad_all"
 
     def get(self, request, pk):
         ad = get_object_or_404(Ad, id=pk, owner=self.request.user)
@@ -67,7 +67,7 @@ class AdUpdateView(LoginRequiredMixin, View):
         ad = form.save(commit=False)
         ad.save()
 
-        self.success_url = reverse_lazy('ads:ad_detail', args=[pk])
+        #self.success_url = reverse_lazy('ads:ad_detail', args=[pk])
         return redirect(self.success_url)
 
 class AdDeleteView(OwnerDeleteView):
