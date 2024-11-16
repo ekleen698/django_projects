@@ -1,6 +1,15 @@
 {% extends "base_menu.html" %}
 {% block content %}
 <h1>Ads</h1>
+<div style="float:right">
+<!-- https://www.w3schools.com/howto/howto_css_search_button.asp -->
+<form>
+    <input type="text" placeholder="Search.." name="search"
+    {% if search %} value="{{ search }}" {% endif %}>
+    <button type="submit"><i class="fa fa-search"></i></button>
+    <a href="{% url 'ads:ad_all' %}"><i class="fa fa-undo"></i></a>
+</form>
+</div>
 <p>
 {% if ad_list %}
 <ul>
@@ -33,6 +42,21 @@
         </span>
         </a>
         {% endif %}
+        <br/>
+        <div style="left:10px">
+            {% if ad.text|length < 100 %}
+                {{ ad.text }}
+            {% else %}
+                {{ ad.text|slice:"0:99" }}
+                <a href="{% url 'ads:ad_detail' ad.id %}">...</a>
+            {% endif %}
+        </div>
+        <small>
+        {% if ad.owner.username %}
+            posted by {{ ad.owner.username }}
+        {% endif %}
+        {{ ad.natural_updated }}
+        </small>
     </li>
   {% endfor %}
 </ul>

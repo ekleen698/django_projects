@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
+from django.db.models import Q
+from django.contrib.humanize.templatetags.humanize import naturaltime
 # csrf exemption in class based views
 # https://stackoverflow.com/questions/16458166/how-to-disable-djangos-csrf-validation
 from django.views.decorators.csrf import csrf_exempt
@@ -19,14 +21,27 @@ class AdListView(OwnerListView):
     template_name = "ads/ad_list.html"
 
     def get(self, request, *args, **kw) :
-        ad_list = Ad.objects.all()
+        strval =  request.GET.get("search", None)
+        if strval :
+            # Multi-field search
+            # __icontains for case-insensitive search
+            query = Q(title__icontains=strval)
+            query.add(Q(text__icontains=strval), Q.OR)
+            ad_list = self.model.objects.filter(query).select_related().distinct().order_by('-updated_at')[:10]
+        else :
+            ad_list = self.model.objects.all().order_by('-updated_at')[:10]
+
+        for obj in ad_list:
+            obj.natural_updated = naturaltime(obj.updated_at)
+
         favorites = list()
         if request.user.is_authenticated:
             # rows = [{'id': 2}, {'id': 4} ... ]  (A list of rows)
             rows = request.user.favorite_ads.values('id')
             # favorites = [2, 4, ...] using list comprehension
             favorites = [ row['id'] for row in rows ]
-        ctx = {'ad_list' : ad_list, 'favorites': favorites}
+
+        ctx = {'ad_list' : ad_list, 'favorites': favorites, 'search': strval}
         return render(request, self.template_name, ctx)
 
 @method_decorator(csrf_exempt, name='dispatch')
