@@ -27,6 +27,7 @@ class AdListView(OwnerListView):
             # __icontains for case-insensitive search
             query = Q(title__icontains=strval)
             query.add(Q(text__icontains=strval), Q.OR)
+            query.add(Q(tags__name__in=[strval]), Q.OR)
             ad_list = self.model.objects.filter(query).select_related().distinct().order_by('-updated_at')[:10]
         else :
             ad_list = self.model.objects.all().order_by('-updated_at')[:10]
@@ -98,6 +99,7 @@ class AdCreateView(LoginRequiredMixin, View):
         ad = form.save(commit=False)
         ad.owner = self.request.user
         ad.save()
+        form.save_m2m()
 
         #self.success_url = reverse_lazy('ads:ad_detail', args=[ad.id])
         return redirect(self.success_url)
@@ -122,6 +124,7 @@ class AdUpdateView(LoginRequiredMixin, View):
 
         ad = form.save(commit=False)
         ad.save()
+        form.save_m2m()
 
         #self.success_url = reverse_lazy('ads:ad_detail', args=[pk])
         return redirect(self.success_url)

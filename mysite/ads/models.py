@@ -1,6 +1,7 @@
 from django.db import models
 from django.core.validators import MinLengthValidator
 from django.conf import settings
+from taggit.managers import TaggableManager
 
 class Ad(models.Model) :
     title = models.CharField(
@@ -15,6 +16,8 @@ class Ad(models.Model) :
                                       through='Comment', related_name='comments_owned')
     favorites = models.ManyToManyField(settings.AUTH_USER_MODEL,
                                        through='Fav', related_name='favorite_ads')
+    # https://django-taggit.readthedocs.io/en/latest/api.html#TaggableManager
+    tags = TaggableManager(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     # Picture
