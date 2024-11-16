@@ -28,6 +28,7 @@ urlpatterns = [
     re_path(r'^oauth/', include('social_django.urls', namespace='social')),  # Keep
 
     # Sample applications
+    path('hello/', include('hello.urls')),
     path('polls/', include('polls.urls')),
     path('autos/', include('autos.urls')),
     path('cats/', include('cats.urls')),

@@ -5,6 +5,8 @@ app_name='ads'
 urlpatterns = [
     path('', views.AdListView.as_view(), name='ad_all'),
     path('ad/<int:pk>', views.AdDetailView.as_view(), name='ad_detail'),
+    path('ad/<int:pk>/favorite', views.AddFavoriteView.as_view(), name='ad_favorite'),
+    path('ad/<int:pk>/unfavorite', views.DeleteFavoriteView.as_view(), name='ad_unfavorite'),
     path('ad/create',
         views.AdCreateView.as_view(), name='ad_create'),
     path('ad/<int:pk>/update',
